@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />    
+    <link rel="stylesheet" href="assets/css/wikistyle.css" />
+    <title>Wikipedia API Look Up</title>
+  </head>
+
+  <body>
+  
+    <!-- This is the Header Section that displays the Weather Dashboard Title. -->
+    <header>
+      <h1>Wikipedia API Look Up</h1>
+    </header>
+
+    <!-- This section positioned relative so the Search Block Section below can be positioned here. -->    
+    <main id="main">
+
+      <!-- This section is an inline block that up empty space on the left side of the main section. -->
+      <section class="search_space"></section>
+
+      <!-- This section is the search block.  It is positioned absolute to its relative parent -->
+      <!-- It contains the Search text input control, a State drop-down control and a Search button. -->
+      <section id="search_block" class="search_block">
+        <h3 class="city_label">Enter Marvel Character:</h3>
+        <input type="text" class="city_input" id="city_input">
+        <button id="search_btn" type="button" class="search_btn" state-code="search">Search</button>
+       </section>
+
+       <section class="right_panel">
+         <section class="location_block">
+           <h3 id="link_title"></h3>
+           <ul id="url_list" style="list-style-type:none; padding-left: 0;"></ul>
+         </section>
+       </section>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="assets/js/Wikiscript.js"></script>
+  </body>
+</html>
