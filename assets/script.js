@@ -40,5 +40,9 @@ function heroSearch(hash) {
     });
 }
 
-function renderPic(data) {}
+function renderPic(data) {
+  const extension = data.data.results[0].thumbnail.extension;
+  const pic = data.data.results[0].thumbnail.path;
+  $("#pic").attr("src", pic + "." + extension);
+}
 searchBtn.addEventListener("click", getHash);
