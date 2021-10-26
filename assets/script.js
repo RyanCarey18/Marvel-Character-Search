@@ -41,6 +41,7 @@ function heroSearch(hash, hero) {
     .then(function (data) {
       console.log(data);
       renderCharData(data, hash);
+      renderComics(data);
     });
 }
 
@@ -54,23 +55,14 @@ function renderCharData(data, hash) {
   const charComicsUrl = data.data.results[0].comics.collectionURI;
   const extension = data.data.results[0].thumbnail.extension;
   const pic = data.data.results[0].thumbnail.path;
-  const charDivEl = $("<div>").addClass("row");
-  const charPicEl = $("<img>")
-    .addClass("col")
-    .attr("src", pic + "." + extension);
-  const charBodyEl = $("<div>").addClass("col");
-  const charNameEl = $("<p>").text(charName);
-  const charDescEl = $("<p>").text(charDesc);
-  const charMediaEl = $("<div>").addClass("row");
-  const charComicEl = $("<p>").text("Number of Comics: " + charComics);
-  const charSeriesEl = $("<p>").text("Number of Series: " + charSeries);
-  const charStoriesEl = $("<p>").text("Number of Stories: " + charStories);
+  const charPicEl = $("#char-pic").attr("src", pic + "." + extension);
+  const charNameEl = $("#char-name").text(charName);
+  const charDescEl = $("#marvel-desc").text(charDesc);
+  const charComicEl = $("#numCom").text("Number of Comics: " + charComics);
+  const charSeriesEl = $("#numSer").text("Number of Series: " + charSeries);
+  const charStoriesEl = $("#numStor").text("Number of Stories: " + charStories);
 
-  charMediaEl.append(charComicEl, charSeriesEl, charStoriesEl);
-  charBodyEl.append(charNameEl, charDescEl, charMediaEl);
-  charDivEl.append(charPicEl, charBodyEl);
-  infoDivEl.append(charDivEl);
-  getComicData(charComicsUrl, hash);
+  //getComicData(charComicsUrl, hash);
 }
 
 function getComicData(url, hash) {
