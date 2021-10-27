@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+     <!-- ADDED THESE ELEMENTS IN ORDER TO USE THE JQUERY MODAL DIALOG BOX. -->    
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />      
+
     <link rel="stylesheet" href="./assets/style.css" />
     <title>Marvel Facts for Fans</title>
   </head>
@@ -12,8 +16,22 @@
     <button id="btn">push me</button>
     <div class="row" id="char-body"></div>
     <div id="comic-area"></div>
+    <p id="wiki-desc"></p>
+    <a id="wiki-link"></a>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------------------------------------------------------------------------------------------------------------------>
+    <!-- ADDED THESE ELEMENTS IN ORDER TO USE THE JQUERY MODAL DIALOG BOX. -->
+    <!------------------------------------------------------------------------------------------------------------------>
+    <div id="dialog" title="Dialog">
+      <p></p>
+    </div>    
+
+    <!-- ADDED THESE ELEMENTS IN ORDER TO USE THE JQUERY MODAL DIALOG BOX. -->    
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>  
+
+    <!-- Commented out Ryans jquery script.  -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="./assets/script.js"></script>
   </body>
