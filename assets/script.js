@@ -21,16 +21,12 @@ function getHash(hero) {
 }
 
 function heroSearch(hash, hero) {
-  fetch(
-    "http://gateway.marvel.com/v1/public/characters?name=" +
-      hero +
-      "&apikey=" +
-      publicKey +
-      "&hash=" +
-      hash +
-      "&ts=" +
-      time
-  )
+  if (hero === "spiderman" || hero === "spider man" || hero === "spider-man") {
+    url = "http://gateway.marvel.com/v1/public/characters/1009610?";
+  } else {
+    url = "http://gateway.marvel.com/v1/public/characters?name=" + hero + "&";
+  }
+  fetch(url + "apikey=" + publicKey + "&hash=" + hash + "&ts=" + time)
     .then(function (response) {
       if (!response.ok) {
         throw response.json();
@@ -41,7 +37,6 @@ function heroSearch(hash, hero) {
     .then(function (data) {
       console.log(data);
       renderCharData(data, hash);
-      renderComics(data);
     });
 }
 
@@ -55,14 +50,14 @@ function renderCharData(data, hash) {
   const charComicsUrl = data.data.results[0].comics.collectionURI;
   const extension = data.data.results[0].thumbnail.extension;
   const pic = data.data.results[0].thumbnail.path;
-  const charPicEl = $("#char-pic").attr("src", pic + "." + extension);
-  const charNameEl = $("#char-name").text(charName);
-  const charDescEl = $("#marvel-desc").text(charDesc);
-  const charComicEl = $("#numCom").text("Number of Comics: " + charComics);
-  const charSeriesEl = $("#numSer").text("Number of Series: " + charSeries);
-  const charStoriesEl = $("#numStor").text("Number of Stories: " + charStories);
+  $("#char-pic").attr("src", pic + "." + extension);
+  $("#char-name").text(charName);
+  $("#marvel-desc").text(charDesc);
+  $("#numCom").text("Number of Comics: " + charComics);
+  $("#numSer").text("Number of Series: " + charSeries);
+  $("#numStor").text("Number of Stories: " + charStories);
 
-  //getComicData(charComicsUrl, hash);
+  getComicData(charComicsUrl, hash);
 }
 
 function getComicData(url, hash) {
@@ -76,11 +71,12 @@ function getComicData(url, hash) {
     })
     .then(function (data) {
       console.log(data);
-      renderComics(data);
+      renderComics(data, hash);
     });
 }
 
-function renderComics(data) {
+function renderComics(data, hash) {
+  comicDivEl.empty();
   for (let i = 0; i < 5; i++) {
     const title = data.data.results[i].title;
     const pic =
@@ -88,9 +84,8 @@ function renderComics(data) {
       "." +
       data.data.results[i].thumbnail.extension;
     const description = data.data.results[i].description;
-    const creators = data.data.results[i].creators.items;
+    //const creators = data.data.results[i].creators.items;
     const characters = data.data.results[i].characters.items;
-
     const comicEl = $("<div>").addClass("col");
     const comicPicEl = $("<img>").addClass("col").attr("src", pic);
     const comicInfoEl = $("<div>").addClass("col");
@@ -98,7 +93,23 @@ function renderComics(data) {
     const comicDescEl = $("<p>").text(description);
     const comicCharactersEl = $("<p>");
     for (let i = 0; i < characters.length; i++) {
-      const character = $("<span>").text(characters[i].name + " ");
+      const url = characters[i].resourceURI;
+      const character = $("<button>").text(characters[i].name).attr("url", url);
+      character.click(function (e) {
+        $("html").scrollTop(0);
+        fetch(url + "?apikey=" + publicKey + "&hash=" + hash + "&ts=" + time)
+          .then(function (response) {
+            if (!response.ok) {
+              throw response.json();
+            }
+
+            return response.json();
+          })
+          .then(function (data) {
+            console.log(data);
+            renderCharData(data, hash);
+          });
+      });
       comicCharactersEl.append(character);
     }
 
