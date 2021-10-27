@@ -60,7 +60,10 @@ $(document).ready(function () {
     const charComicsUrl = data.data.results[0].comics.collectionURI;
     const extension = data.data.results[0].thumbnail.extension;
     const pic = data.data.results[0].thumbnail.path;
-    $("#char-pic").attr("src", pic + "." + extension);
+    $("#char-pic").attr({
+      src: pic + "." + extension,
+      alt: "Picture of " + charName,
+    });
     $("#char-name").text(charName);
     $("#marvel-desc").text(charDesc);
     $("#numCom").text("Number of Comics: " + charComics);
@@ -97,7 +100,9 @@ $(document).ready(function () {
       //const creators = data.data.results[i].creators.items;
       const characters = data.data.results[i].characters.items;
       const comicEl = $("<div>").addClass("col");
-      const comicPicEl = $("<img>").addClass("col").attr("src", pic);
+      const comicPicEl = $("<img>")
+        .addClass("col")
+        .attr({ src: pic, alt: "Picture of comic cover" });
       const comicInfoEl = $("<div>").addClass("col");
       const comicTitleEl = $("<p>").text(title);
       const comicDescEl = $("<p>").text(description);
@@ -120,6 +125,7 @@ $(document).ready(function () {
             .then(function (data) {
               console.log(data);
               renderCharData(data, hash);
+              getWikiPageID(characters[i].name);
             });
         });
         comicCharactersEl.append(character);
