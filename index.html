@@ -5,15 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-     <!-- ADDED THESE ELEMENTS IN ORDER TO USE THE JQUERY MODAL DIALOG BOX. -->    
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />      
+    <!-- ADDED THESE ELEMENTS IN ORDER TO USE THE JQUERY MODAL DIALOG BOX. -->
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+    />
 
     <link rel="stylesheet" href="./assets/style.css" />
     <title>Marvel Facts for Fans</title>
   </head>
   <body>
-    <input id="input" type="text" placeholder="Enter a Hero" />
-    <button id="btn">push me</button>
+    <div>
+      <input id="input" type="text" placeholder="Enter a Hero" />
+      <button id="btn">push me</button>
+      <div id="search-history"></div>
+    </div>
     <div class="row" id="char-body">
       <div class="row">
         <img id="char-pic" class="col" />
@@ -39,11 +45,11 @@
     <!------------------------------------------------------------------------------------------------------------------>
     <div id="dialog" title="Dialog">
       <p></p>
-    </div>    
+    </div>
 
-    <!-- ADDED THESE ELEMENTS IN ORDER TO USE THE JQUERY MODAL DIALOG BOX. -->    
+    <!-- ADDED THESE ELEMENTS IN ORDER TO USE THE JQUERY MODAL DIALOG BOX. -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>  
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <!-- Commented out Ryans jquery script.  -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->

@@ -8,11 +8,12 @@ $(document).ready(function () {
   let time = Date.now();
   const publicKey = "c598176713a7f4af235c955e6ab2cdf5";
   const privateKey = "21fe2681db8292d452bae0ffe9b07fb96a43fc39";
-  const infoDivEl = $("#char-body");
   const comicDivEl = $("#comic-area");
   const input = document.getElementById("input");
-  console.log(time);
+  const searchHistory = document.getElementById("search-history");
+  let history = [];
 
+  //grabs a hash so you can use the marvel api
   function getHash(hero) {
     const hash = time + privateKey + publicKey;
     fetch("https://api.hashify.net/hash/md5/hex?value=" + hash)
@@ -26,11 +27,12 @@ $(document).ready(function () {
       });
   }
 
+  //searches the marvel api for the hero
   function heroSearch(hash, hero) {
     if (
-      hero === "spiderman" ||
-      hero === "spider man" ||
-      hero === "spider-man"
+      hero === "Spiderman" ||
+      hero === "Spider Man" ||
+      hero === "Spider-Man"
     ) {
       url = "http://gateway.marvel.com/v1/public/characters/1009610?";
     } else {
@@ -45,18 +47,17 @@ $(document).ready(function () {
         return response.json();
       })
       .then(function (data) {
-        console.log(data);
         renderCharData(data, hash);
       });
   }
 
+  //uses the marvel api data to render the main character info
   function renderCharData(data, hash) {
     const charName = data.data.results[0].name;
     const charDesc = data.data.results[0].description;
     const charComics = data.data.results[0].comics.available;
     const charSeries = data.data.results[0].series.available;
     const charStories = data.data.results[0].stories.available;
-    //const charComicsUrl = data.data.results[0].comics.items;
     const charComicsUrl = data.data.results[0].comics.collectionURI;
     const extension = data.data.results[0].thumbnail.extension;
     const pic = data.data.results[0].thumbnail.path;
@@ -73,6 +74,7 @@ $(document).ready(function () {
     getComicData(charComicsUrl, hash);
   }
 
+  //gets the data for the comics
   function getComicData(url, hash) {
     fetch(url + "?apikey=" + publicKey + "&hash=" + hash + "&ts=" + time)
       .then(function (response) {
@@ -83,11 +85,11 @@ $(document).ready(function () {
         return response.json();
       })
       .then(function (data) {
-        console.log(data);
         renderComics(data, hash);
       });
   }
 
+  //renders the comic cards down below
   function renderComics(data, hash) {
     comicDivEl.empty();
     for (let i = 0; i < 5; i++) {
@@ -97,7 +99,6 @@ $(document).ready(function () {
         "." +
         data.data.results[i].thumbnail.extension;
       const description = data.data.results[i].description;
-      //const creators = data.data.results[i].creators.items;
       const characters = data.data.results[i].characters.items;
       const comicEl = $("<div>").addClass("col");
       const comicPicEl = $("<img>")
@@ -123,7 +124,11 @@ $(document).ready(function () {
               return response.json();
             })
             .then(function (data) {
-              console.log(data);
+              if (history.includes(characters[i].name)) {
+              } else {
+                history.unshift(characters[i].name);
+              }
+              renderHistory();
               renderCharData(data, hash);
               getWikiPageID(characters[i].name);
             });
@@ -136,6 +141,7 @@ $(document).ready(function () {
     }
   }
 
+  //This is the event listener for the main Search Bar
   searchBtn.addEventListener("click", function (e) {
     e.preventDefault();
 
@@ -164,10 +170,34 @@ $(document).ready(function () {
       return;
     }
 
-    getHash(searchInput);
+    //Capitalizes the first worst of every search
+    searchArray = searchInput.split(" ");
+    for (var i = 0; i < searchArray.length; i++) {
+      searchArray[i] =
+        searchArray[i].charAt(0).toUpperCase() + searchArray[i].slice(1);
+    }
+
+    searchCaps = searchArray.join(" ");
+
+    //turns a spiderman search into the main spiderman search
+    if (
+      searchCaps === "Spiderman" ||
+      searchCaps === "Spider Man" ||
+      searchCaps === "Spider-Man"
+    ) {
+      searchCaps = "Spider-Man (Peter Parker)";
+    }
+
+    //Puts new search into array if it is not already in it.
+    if (history.includes(searchCaps)) {
+    } else {
+      history.unshift(searchCaps);
+    }
+    renderHistory();
+    getHash(searchCaps);
 
     // Added call to get WikiPageID
-    getWikiPageID(searchInput);
+    getWikiPageID(searchCaps);
   });
 
   // SECTION START: Start of Wikipedia Code : //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -176,16 +206,15 @@ $(document).ready(function () {
   // Function: StartWordWithCapitalLetter - This function will take the word passed in, Make the first character upper case, set all the
   // rest of the characters to lower case and return the word to the calling function.
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  function StartWordWithCapitalLetter(szWord)
-  {
-      let szTemp = "";
+  function StartWordWithCapitalLetter(szWord) {
+    let szTemp = "";
 
-      // Make the first character in the word uppercase.
-      szTemp = szWord.substring(0, 1).toUpperCase();
+    // Make the first character in the word uppercase.
+    szTemp = szWord.substring(0, 1).toUpperCase();
 
-      // Set all of the rest of the characters in the word to lowercase.
-      szTemp += szWord.substring(1).toLowerCase();
-      return (szTemp);
+    // Set all of the rest of the characters in the word to lowercase.
+    szTemp += szWord.substring(1).toLowerCase();
+    return szTemp;
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -211,13 +240,13 @@ $(document).ready(function () {
     let page_response4 = null;
     let page_data4 = null;
     let szWikiName = "";
-    let szBuffer = ""
+    let szBuffer = "";
     let szStorage = "";
     let nPos = 0;
     let szWord = "";
     let nStartPos = 0;
 
-    // Format the character name string passed into this function.  
+    // Format the character name string passed into this function.
     // Pull out each word and make the first letter capital and all the rest lower case.
     // Set the Buffer string to an empty string.
     szBuffer = "";
@@ -228,53 +257,46 @@ $(document).ready(function () {
     // look for a space in the storage string.
     nPos = szStorage.indexOf(" ");
 
-    if (nPos === -1)
-    {
-        // Call the function to format the word to start with a capital letter.
-        szBuffer = StartWordWithCapitalLetter(szCharacter);
-    }
-    else
-    {
-        // Perform the following operations if a space character was found
-        while (nPos != -1)
-        {
-            // If the buffer already contains a word then add a space after it.
-            if (szBuffer.length > 0)
-            {
-                szBuffer += " ";
-            }
-
-            // Get the word from the storage string.
-            szWord = szStorage.substring(nStartPos, nPos);
-
-            // Add the modified Word to the buffer string.
-            szBuffer += StartWordWithCapitalLetter(szWord);
-
-            // Adjust the start postion value and put the rest of the string into the storage string.
-            nStartPos = nPos + 1;
-            szStorage = szStorage.substring(nStartPos);
-
-            // look for a space in the storage string.
-            nPos = szStorage.indexOf(" ");
-
-            // if a space was not found then add the modified word to the buffer string.
-            if (nPos == -1)
-            {
-                szBuffer += " ";
-
-                // Call the function to format the word to start with a capital letter.                
-                szBuffer += StartWordWithCapitalLetter(szStorage);
-            }
-            // Otherwise reset the start position for the new word to zero.
-            else
-            {
-                nStartPos = 0;                        
-            }
+    if (nPos === -1) {
+      // Call the function to format the word to start with a capital letter.
+      szBuffer = StartWordWithCapitalLetter(szCharacter);
+    } else {
+      // Perform the following operations if a space character was found
+      while (nPos != -1) {
+        // If the buffer already contains a word then add a space after it.
+        if (szBuffer.length > 0) {
+          szBuffer += " ";
         }
+
+        // Get the word from the storage string.
+        szWord = szStorage.substring(nStartPos, nPos);
+
+        // Add the modified Word to the buffer string.
+        szBuffer += StartWordWithCapitalLetter(szWord);
+
+        // Adjust the start postion value and put the rest of the string into the storage string.
+        nStartPos = nPos + 1;
+        szStorage = szStorage.substring(nStartPos);
+
+        // look for a space in the storage string.
+        nPos = szStorage.indexOf(" ");
+
+        // if a space was not found then add the modified word to the buffer string.
+        if (nPos == -1) {
+          szBuffer += " ";
+
+          // Call the function to format the word to start with a capital letter.
+          szBuffer += StartWordWithCapitalLetter(szStorage);
+        }
+        // Otherwise reset the start position for the new word to zero.
+        else {
+          nStartPos = 0;
+        }
+      }
     }
 
     // Set the Wiki Name string equal to the contents of the Buffer string.
-    szWikiName = szBuffer;            
+    szWikiName = szBuffer;
 
     // Replace any space characters with the underline character.
     szWikiName = szWikiName.replace(/ /gi, "_");
@@ -282,7 +304,8 @@ $(document).ready(function () {
     ///////////////////////////////////////////////////////////////////////////////////////
     // Perform a PARSE action.  Looking for szWikiName + "_(Marvel_Comics)".
     //////////////////////////////////////////////////////////////////////////////////////
-    requestUrl = "https://en.wikipedia.org/w/api.php?origin=*&action=parse&prop=text&redirects=1&page=";
+    requestUrl =
+      "https://en.wikipedia.org/w/api.php?origin=*&action=parse&prop=text&redirects=1&page=";
     requestUrl += szWikiName + "_(Marvel_Comics)&format=json";
 
     // Replace any space character with the text string "%20".
@@ -426,8 +449,7 @@ $(document).ready(function () {
   // PageId - The Id value for the page.
   // szCharacter - The character name that the user typed in.
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  function GetWikiData(PageId) 
-  {
+  function GetWikiData(PageId) {
     let nIndex = 0;
     let szLinkName = "";
     let szLinkUrl = "";
@@ -442,7 +464,9 @@ $(document).ready(function () {
     ////////////////////////////////////////////////////////////////////////////////////////
     // Using query action to get the top section of the page.  Passing in the PageId value.
     ////////////////////////////////////////////////////////////////////////////////////////
-    requestUrl = "https://en.wikipedia.org/w/api.php?origin=*&action=query&prop=extracts&exintro&explaintext&redirects=1&format=json&pageids=" + PageId;
+    requestUrl =
+      "https://en.wikipedia.org/w/api.php?origin=*&action=query&prop=extracts&exintro&explaintext&redirects=1&format=json&pageids=" +
+      PageId;
 
     // Replace any space character with the text string "%20".
     requestUrl = requestUrl.replace(/ /gi, "%20");
@@ -480,7 +504,9 @@ $(document).ready(function () {
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Using opensearch action - Getting list of link names and url's.
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        requestUrl = "https://en.wikipedia.org/w/api.php?&origin=*&action=opensearch&search=" + szSearch;
+        requestUrl =
+          "https://en.wikipedia.org/w/api.php?&origin=*&action=opensearch&search=" +
+          szSearch;
 
         // Replace any space character with the text string "%20".
         requestUrl = requestUrl.replace(/ /gi, "%20");
@@ -573,14 +599,48 @@ $(document).ready(function () {
   //
   // This function will remove all of the attributes and the text so the anchor element is not visible.
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  function WikiListNotFound() 
-  {
+  function WikiListNotFound() {
     // Remove the all the attributes for the wiki link.
     wikiLink.removeAttribute("href");
     wikiLink.removeAttribute("target");
     wikiLink.innerHTML = "";
   }
 
-  // SECTION END: End of Wikipedia Code : //////////////////////////////////////////////////////////////////////////////////////////////////  
+  // SECTION END: End of Wikipedia Code : //////////////////////////////////////////////////////////////////////////////////////////////////
 
+  function renderHistory() {
+    searchHistory.innerHTML = "";
+    history.splice(5);
+    saveHistory();
+    for (i = 0; i < history.length; i++) {
+      const historyButton = document.createElement("button");
+      historyButton.textContent = history[i];
+      historyButton.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        const searchInput = historyButton.textContent;
+        getHash(searchInput);
+
+        // Added call to get WikiPageID
+        getWikiPageID(searchInput);
+      });
+      searchHistory.append(historyButton);
+    }
+  }
+
+  function saveHistory() {
+    localStorage.setItem("history", JSON.stringify(history));
+  }
+
+  function init() {
+    var storedHistory = JSON.parse(localStorage.getItem("history"));
+
+    if (storedHistory !== null) {
+      history = storedHistory;
+    }
+    renderHistory(storedHistory);
+    saveHistory();
+  }
+
+  init();
 });
