@@ -149,6 +149,7 @@ $(document).ready(function () {
       $(function () {
         $("#dialog").text("You must enter a Marvel Character!");
         $("#dialog").dialog({
+          modal: true,
           title: "Marvel Comics",
           buttons: [
             {
@@ -169,6 +170,24 @@ $(document).ready(function () {
     getWikiPageID(searchInput);
   });
 
+  // SECTION START: Start of Wikipedia Code : //////////////////////////////////////////////////////////////////////////////////////////////////
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // Function: StartWordWithCapitalLetter - This function will take the word passed in, Make the first character upper case, set all the
+  // rest of the characters to lower case and return the word to the calling function.
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  function StartWordWithCapitalLetter(szWord)
+  {
+      let szTemp = "";
+
+      // Make the first character in the word uppercase.
+      szTemp = szWord.substring(0, 1).toUpperCase();
+
+      // Set all of the rest of the characters in the word to lowercase.
+      szTemp += szWord.substring(1).toLowerCase();
+      return (szTemp);
+  }
+
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // Function: getWikiPageID - This function will call the Wikipedia API to get the page ID for the page that match the page text passed in
   // the PARSE command.  This command is done four times, examples for "Ant Man" character shown below:
@@ -178,7 +197,7 @@ $(document).ready(function () {
   // 3. "Ant_Man_(character)"
   // 4. "Ant_Man"
   //
-  // If a parse object is returned then the function GetWikiData is called passing in the Page Id value and the character name.
+  // If a parse object is returned then the function GetWikiData is called passing in the Page Id value.
   // If a parse object is never returned then the function WikiPageNotFound is called.
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   function getWikiPageID(szCharacter) {
@@ -191,13 +210,79 @@ $(document).ready(function () {
     let page_data3 = null;
     let page_response4 = null;
     let page_data4 = null;
-    let szWikiName = szCharacter.replace(/ /gi, "_");
+    let szWikiName = "";
+    let szBuffer = ""
+    let szStorage = "";
+    let nPos = 0;
+    let szWord = "";
+    let nStartPos = 0;
+
+    // Format the character name string passed into this function.  
+    // Pull out each word and make the first letter capital and all the rest lower case.
+    // Set the Buffer string to an empty string.
+    szBuffer = "";
+
+    // Set the storage string to the Character string value.
+    szStorage = szCharacter;
+
+    // look for a space in the storage string.
+    nPos = szStorage.indexOf(" ");
+
+    if (nPos === -1)
+    {
+        // Call the function to format the word to start with a capital letter.
+        szBuffer = StartWordWithCapitalLetter(szCharacter);
+    }
+    else
+    {
+        // Perform the following operations if a space character was found
+        while (nPos != -1)
+        {
+            // If the buffer already contains a word then add a space after it.
+            if (szBuffer.length > 0)
+            {
+                szBuffer += " ";
+            }
+
+            // Get the word from the storage string.
+            szWord = szStorage.substring(nStartPos, nPos);
+
+            // Add the modified Word to the buffer string.
+            szBuffer += StartWordWithCapitalLetter(szWord);
+
+            // Adjust the start postion value and put the rest of the string into the storage string.
+            nStartPos = nPos + 1;
+            szStorage = szStorage.substring(nStartPos);
+
+            // look for a space in the storage string.
+            nPos = szStorage.indexOf(" ");
+
+            // if a space was not found then add the modified word to the buffer string.
+            if (nPos == -1)
+            {
+                szBuffer += " ";
+
+                // Call the function to format the word to start with a capital letter.                
+                szBuffer += StartWordWithCapitalLetter(szStorage);
+            }
+            // Otherwise reset the start position for the new word to zero.
+            else
+            {
+                nStartPos = 0;                        
+            }
+        }
+    }
+
+    // Set the Wiki Name string equal to the contents of the Buffer string.
+    szWikiName = szBuffer;            
+
+    // Replace any space characters with the underline character.
+    szWikiName = szWikiName.replace(/ /gi, "_");
 
     ///////////////////////////////////////////////////////////////////////////////////////
     // Perform a PARSE action.  Looking for szWikiName + "_(Marvel_Comics)".
     //////////////////////////////////////////////////////////////////////////////////////
-    requestUrl =
-      "https://en.wikipedia.org/w/api.php?origin=*&action=parse&prop=text&redirects=1&page=";
+    requestUrl = "https://en.wikipedia.org/w/api.php?origin=*&action=parse&prop=text&redirects=1&page=";
     requestUrl += szWikiName + "_(Marvel_Comics)&format=json";
 
     // Replace any space character with the text string "%20".
@@ -217,7 +302,7 @@ $(document).ready(function () {
       // Get the page data.
       .then(function (page_data) {
         if (page_data.parse != undefined) {
-          GetWikiData(page_data.parse.pageid, szCharacter);
+          GetWikiData(page_data.parse.pageid);
         } else {
           ///////////////////////////////////////////////////////////////////////////////////////
           // Perform a PARSE action.  Looking for szWikiName + "_(comics)"".
@@ -243,7 +328,7 @@ $(document).ready(function () {
             // Get the page data.
             .then(function (page_data2) {
               if (page_data2.parse != undefined) {
-                GetWikiData(page_data2.parse.pageid, szCharacter);
+                GetWikiData(page_data2.parse.pageid);
               } else {
                 ///////////////////////////////////////////////////////////////////////////////////////
                 // Perform a PARSE action.  Looking for szWikiName + "_(character)".
@@ -270,7 +355,7 @@ $(document).ready(function () {
                   .then(function (page_data3) {
                     // If a parse object was not returned then call function to display page not found.
                     if (page_data.parse != undefined) {
-                      GetWikiData(page_data3.parse.pageid, szCharacter);
+                      GetWikiData(page_data3.parse.pageid);
                     } else {
                       ///////////////////////////////////////////////////////////////////////////////////////
                       // Perform a PARSE action.  Looking for szWikiName.
@@ -297,16 +382,16 @@ $(document).ready(function () {
                         .then(function (page_data4) {
                           // If a parse object was not returned then call function to display page not found.
                           if (page_data4.parse != undefined) {
-                            GetWikiData(page_data4.parse.pageid, szCharacter);
+                            GetWikiData(page_data4.parse.pageid);
                           } else {
-                            WikiPageNotFound(szCharacter, "");
+                            WikiPageNotFound("");
                             return null;
                           }
                         })
 
                         // Caught error for list, call routine to display Wiki List Not Found.
                         .catch(function (error) {
-                          WikiPageNotFound(szCharacter, error.message);
+                          WikiPageNotFound(error.message);
                           return null;
                         });
                     }
@@ -314,7 +399,7 @@ $(document).ready(function () {
 
                   // Caught error for list, call routine to display Wiki List Not Found.
                   .catch(function (error) {
-                    WikiPageNotFound(szCharacter, error.message);
+                    WikiPageNotFound(error.message);
                     return null;
                   });
               }
@@ -322,7 +407,7 @@ $(document).ready(function () {
 
             // Caught error for list, call routine to display Wiki List Not Found.
             .catch(function (error) {
-              WikiPageNotFound(szCharacter, error.message);
+              WikiPageNotFound(error.message);
               return null;
             });
         }
@@ -330,7 +415,7 @@ $(document).ready(function () {
 
       // Caught Wiki Page Content error, call routine to display Wiki Page Not Found.
       .catch(function (error) {
-        WikiPageNotFound(szCharacter, error.message);
+        WikiPageNotFound(error.message);
         return null;
       });
   }
@@ -341,7 +426,8 @@ $(document).ready(function () {
   // PageId - The Id value for the page.
   // szCharacter - The character name that the user typed in.
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  function GetWikiData(PageId, szCharacter) {
+  function GetWikiData(PageId) 
+  {
     let nIndex = 0;
     let szLinkName = "";
     let szLinkUrl = "";
@@ -351,15 +437,12 @@ $(document).ready(function () {
     let content_data = null;
     let list_response = null;
     let list_data = null;
-    let bLinksAdded = false;
     let szSearch = "";
 
     ////////////////////////////////////////////////////////////////////////////////////////
     // Using query action to get the top section of the page.  Passing in the PageId value.
     ////////////////////////////////////////////////////////////////////////////////////////
-    requestUrl =
-      "https://en.wikipedia.org/w/api.php?origin=*&action=query&prop=extracts&exintro&explaintext&redirects=1&format=json&pageids=" +
-      PageId;
+    requestUrl = "https://en.wikipedia.org/w/api.php?origin=*&action=query&prop=extracts&exintro&explaintext&redirects=1&format=json&pageids=" + PageId;
 
     // Replace any space character with the text string "%20".
     requestUrl = requestUrl.replace(/ /gi, "%20");
@@ -383,7 +466,7 @@ $(document).ready(function () {
             .toLowerCase()
             .search("comic") == -1
         ) {
-          WikiPageNotFound(szCharacter, "");
+          WikiPageNotFound("");
           return;
         }
 
@@ -397,9 +480,7 @@ $(document).ready(function () {
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Using opensearch action - Getting list of link names and url's.
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        requestUrl =
-          "https://en.wikipedia.org/w/api.php?&origin=*&action=opensearch&search=" +
-          szSearch;
+        requestUrl = "https://en.wikipedia.org/w/api.php?&origin=*&action=opensearch&search=" + szSearch;
 
         // Replace any space character with the text string "%20".
         requestUrl = requestUrl.replace(/ /gi, "%20");
@@ -417,7 +498,7 @@ $(document).ready(function () {
 
           // Get the list data.
           .then(function (list_data) {
-            // Remove the all the attributes for the wiki link.
+            // Remove the all the attributes for the wiki link so initially not displayed.
             wikiLink.removeAttribute("href");
             wikiLink.removeAttribute("target");
             wikiLink.innerHTML = "";
@@ -435,8 +516,8 @@ $(document).ready(function () {
 
                     // Find the link that matches the title of the page.
                     // This is the only one we want to display.
+                    // Add attributes and text so anchor element will be visible.
                     if (szLinkName.toLowerCase() === szSearch.toLowerCase()) {
-                      bLinksAdded = true;
                       wikiLink.setAttribute("href", szLinkUrl);
                       wikiLink.setAttribute("target", "_blank");
                       wikiLink.innerHTML = szLinkName;
@@ -449,29 +530,28 @@ $(document).ready(function () {
 
           // Caught error for list, call routine to display Wiki List Not Found.
           .catch(function (error) {
-            WikiListNotFound(szCharacter, error.message);
+            WikiListNotFound();
             return null;
           });
       })
 
       // Caught Wiki Page Content error, call routine to display Wiki Page Not Found.
       .catch(function (error) {
-        WikiPageNotFound(szCharacter, error.message);
+        WikiPageNotFound(error.message);
         return null;
       });
   }
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // Function: WikiPageNotFound:
-  // szCharacterName: String that contains the marvel character name.
   // szMessage: String that contains an error message, maybe an empty string.
   //
   // This function will display the message the the Wiki Page Was Not Found in the Wiki page paragraph element.
   // It will also display the error message if one is passed into this routine.
-  // It will add one element to the list element stating that the Wiki Links were not found.
+  // It will remove all of the attributes and text from the anchor element so it is not visible.
   //
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  function WikiPageNotFound(szCharacterName, szMessage) {
+  function WikiPageNotFound(szMessage) {
     let szTemp = "";
 
     // Add the Character name and message to the paragraph.
@@ -490,17 +570,17 @@ $(document).ready(function () {
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // Function: WikiListNotFound:
-  // szCharacterName: String that contains the marvel character name.
-  // szMessage: String that contains an error message, maybe an empty string.
   //
-  // This function will display the message the the Wiki Links Were Not Found in the List element.
-  // It will also display the error message if one is passed into this routine.
-  //
+  // This function will remove all of the attributes and the text so the anchor element is not visible.
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  function WikiListNotFound(szCharacterName, szMessage) {
+  function WikiListNotFound() 
+  {
     // Remove the all the attributes for the wiki link.
     wikiLink.removeAttribute("href");
     wikiLink.removeAttribute("target");
     wikiLink.innerHTML = "";
   }
+
+  // SECTION END: End of Wikipedia Code : //////////////////////////////////////////////////////////////////////////////////////////////////  
+
 });
