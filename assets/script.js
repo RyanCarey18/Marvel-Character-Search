@@ -112,7 +112,9 @@ $(document).ready(function () {
       const comicDescEl = $("<p>").text(description);
       const comicCharactersEl = $("<p>");
       for (let i = 0; i < characters.length; i++) {
-        const url = characters[i].resourceURI;
+        let url = characters[i].resourceURI;
+        url = url.slice(4);
+        url = "https" + url;
         const character = $("<button>")
           .text(characters[i].name)
           .attr("url", url);
