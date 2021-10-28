@@ -77,6 +77,8 @@ $(document).ready(function () {
 
   //gets the data for the comics
   function getComicData(url, hash) {
+    url = url.slice(4);
+    url = "https" + url;
     fetch(url + "?apikey=" + publicKey + "&hash=" + hash + "&ts=" + time)
       .then(function (response) {
         if (!response.ok) {
