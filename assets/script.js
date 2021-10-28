@@ -34,9 +34,10 @@ $(document).ready(function () {
       hero === "Spider Man" ||
       hero === "Spider-Man"
     ) {
-      url = "http://gateway.marvel.com/v1/public/characters/1009610?";
+      url = "https://gateway.marvel.com/v1/public/characters/1009610?";
     } else {
-      url = "http://gateway.marvel.com/v1/public/characters?name=" + hero + "&";
+      url =
+        "https://gateway.marvel.com/v1/public/characters?name=" + hero + "&";
     }
     fetch(url + "apikey=" + publicKey + "&hash=" + hash + "&ts=" + time)
       .then(function (response) {
