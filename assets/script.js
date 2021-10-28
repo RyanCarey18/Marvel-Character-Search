@@ -251,6 +251,10 @@ $(document).ready(function () {
     let szWord = "";
     let nStartPos = 0;
 
+    if (szCharacter === "Spider-Man (Peter Parker)") {
+      szCharacter = "spiderman";
+    }
+
     // Format the character name string passed into this function.
     // Pull out each word and make the first letter capital and all the rest lower case.
     // Set the Buffer string to an empty string.
