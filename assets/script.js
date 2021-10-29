@@ -251,8 +251,13 @@ $(document).ready(function () {
     let szWord = "";
     let nStartPos = 0;
 
-    if (szCharacter === "Spider-Man (Peter Parker)") {
-      szCharacter = "spiderman";
+
+    // Look for space followed by ( in string like "Spider-Man (Peter Parker)" and truncate the string
+    // at the space before the ( left bracket character.
+    nPos = szCharacter.indexOf(" (");
+    if (nPos != -1)
+    {
+      szCharacter = szCharacter.substring(0, nPos);
     }
 
     // Format the character name string passed into this function.
