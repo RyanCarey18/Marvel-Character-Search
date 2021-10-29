@@ -23,6 +23,9 @@ a:hover {
 
 body {
     background-color: black;
+    background-image: url('./images/bg4.jpeg');
+    background-attachment: fixed;
+    background-size: cover;
 }
 
 p {
