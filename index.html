@@ -5,47 +5,67 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- ADDED THESE ELEMENTS IN ORDER TO USE THE JQUERY MODAL DIALOG BOX. -->
-    <link
-      rel="stylesheet"
-      href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
-    />
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Coda:wght@800&family=Ubuntu&display=swap" rel="stylesheet">
 
+    <!-- ADDED THESE ELEMENTS IN ORDER TO USE THE JQUERY MODAL DIALOG BOX. -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
     <link rel="stylesheet" href="./assets/style.css" />
+
     <title>Marvel Facts for Fans</title>
   </head>
   <body>
-    <div>
-      <input id="input" type="text" placeholder="Enter a Hero" />
-      <button id="btn">push me</button>
-      <div id="search-history"></div>
-    </div>
-    <div class="row" id="char-body">
-      <div class="row">
-        <img id="char-pic" class="col" />
-        <div class="col">
-          <div id="char-name"></div>
-          <p id="marvel-desc"></p>
-          <p id="wiki-desc"></p>
-          <div class="row">
-            <p id="numCom"></p>
-            <p id="numSer"></p>
-            <p id="numStor"></p>
-            <a id="wiki-link"></a>
+    <header> 
+        <div class="bg-auto bg-center" style="background-image: url(./assets/images/ban1.jpeg)">
+        <h1 class="text-white text-6xl font-extrabold" id="title">Marvel History</h1>
+        </div>
+        <nav class="bg-red-700">
+            <a href="#">Character Search</a>
+            <a href="#">Marvel History</a>
+        </nav>
+    </header>
+    <main>
+      <div class="bg-local bg-contain bg-no-repeat bg-top" style="background-image: url(./assets/images/bg4.jpeg)">
+
+      <div class="container">
+        <section id="search_block" class="search_block">
+          <h3 class="text text-white">Enter Marvel Character:</h3>
+          <input type="text" class="border-2 border-red-500" id="input" placeholder="Enter your hero"/>
+          <button id="btn" type="button" class="search_btn ring-2 ring-red-600" state-code="search">Search</button>
+          <div id="search-history"></div>
+        </section>
+      </div>
+
+      <div class="row" id="char-body">
+        <div class="row">
+          <img id="char-pic" class="col" />
+          <div class="col">
+            <div id="char-name"></div>
+            <p id="marvel-desc"></p>
+            <p id="wiki-desc"></p>
+            <div class="row">
+              <p id="numCom"></p>
+              <p id="numSer"></p>
+              <p id="numStor"></p>
+              <a id="wiki-link"></a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div id="comic-area"></div>
-    <p id="wiki-desc"></p>
-    <a id="wiki-link"></a>
 
+    
+      <div id="comic-area"></div>
+      <p id="wiki-desc"></p>
+      <a id="wiki-link"></a>
     <!------------------------------------------------------------------------------------------------------------------>
     <!-- ADDED THESE ELEMENTS IN ORDER TO USE THE JQUERY MODAL DIALOG BOX. -->
     <!------------------------------------------------------------------------------------------------------------------>
     <div id="dialog" title="Dialog">
       <p></p>
     </div>
+    
 
     <!-- ADDED THESE ELEMENTS IN ORDER TO USE THE JQUERY MODAL DIALOG BOX. -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -55,5 +75,7 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="./assets/script.js"></script>
+    </div>
+    </main>
   </body>
 </html>
