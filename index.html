@@ -4,10 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-
-
-    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+   <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com"> 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
     <link href="https://fonts.googleapis.com/css2?family=Coda:wght@800&family=Ubuntu&display=swap" rel="stylesheet">
@@ -21,7 +18,6 @@
     <title>Marvel Facts for Fans</title>
   </head>
   <body>
-
     <header> 
         <div class="bg-auto bg-center" style="background-image: url(./assets/images/ban1.jpeg)">
         <h1 class="text-white text-6xl font-extrabold" id="title">Marvel History</h1>
@@ -37,13 +33,16 @@
 
 <!--left side-->
 <div class="flex justify-between py20 px-10 ">
-  <div class="w-">
-    <div>
-      <input id="input" type="text" placeholder="Enter a Hero" />
-      <button id="btn">push me</button>
-      <div id="search-history"></div>
+  <div class="w-1/4">
+    <div class="container">
+      <section id="search_block" class="search_block">
+        <h3 class="text text-white">Enter Marvel Character:</h3>
+        <input type="text" class="border-2 border-red-500" id="input" placeholder="Enter your hero"/>
+        <button id="btn" type="button" class="search_btn ring-2 ring-red-600" state-code="search">Search</button>
+        <div id="search-history"></div>
+      </section>
     </div>
-  </div>
+</div>
 ​
 <!--right side-->
 ​
@@ -74,9 +73,9 @@
     </div>
   </div>
 </div>
-</div>
-​
 
+
+    
     
       <div id="comic-area"></div>
       <p id="wiki-desc"></p>
@@ -88,13 +87,6 @@
       <p></p>
     </div>
     
-
-    <!------------------------------------------------------------------------------------------------------------------>
-    <!-- ADDED THESE ELEMENTS IN ORDER TO USE THE JQUERY MODAL DIALOG BOX. -->
-    <!------------------------------------------------------------------------------------------------------------------>
-    <div id="dialog" title="Dialog">
-      <p></p>
-    </div>
 
     <!-- ADDED THESE ELEMENTS IN ORDER TO USE THE JQUERY MODAL DIALOG BOX. -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>

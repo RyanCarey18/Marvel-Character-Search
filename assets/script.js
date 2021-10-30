@@ -48,7 +48,17 @@ $(document).ready(function () {
         return response.json();
       })
       .then(function (data) {
-        renderCharData(data, hash);
+        if (data.data.count === 0) {
+          return myAlert();
+        } else {
+          if (history.includes(hero)) {
+          } else {
+            history.unshift(hero);
+          }
+          renderCharData(data, hash);
+          getWikiPageID(hero);
+          renderHistory();
+        }
       });
   }
 
@@ -156,22 +166,8 @@ $(document).ready(function () {
 
     // If no character name was entered then display the JQuery Modal Dialog Box.
     if (searchInput.length === 0) {
-      // Used the JQuery Modal Dialog Box with the following options.
-      $(function () {
-        $("#dialog").text("You must enter a Marvel Character!");
-        $("#dialog").dialog({
-          modal: true,
-          title: "Marvel Comics",
-          buttons: [
-            {
-              text: "Ok",
-              click: function () {
-                $(this).dialog("close");
-              },
-            },
-          ],
-        });
-      });
+      myAlert();
+
       return;
     }
 
@@ -193,18 +189,25 @@ $(document).ready(function () {
       searchCaps = "Spider-Man (Peter Parker)";
     }
 
-    //Puts new search into array if it is not already in it.
-    if (history.includes(searchCaps)) {
-    } else {
-      history.unshift(searchCaps);
-    }
-    renderHistory();
+    //renderHistory();
     getHash(searchCaps);
-
-    // Added call to get WikiPageID
-    getWikiPageID(searchCaps);
   });
 
+  function myAlert() {
+    $("#dialog").text("You must enter a Marvel Character!");
+    $("#dialog").dialog({
+      modal: true,
+      title: "Marvel Comics",
+      buttons: [
+        {
+          text: "Ok",
+          click: function () {
+            $(this).dialog("close");
+          },
+        },
+      ],
+    });
+  }
   // SECTION START: Start of Wikipedia Code : //////////////////////////////////////////////////////////////////////////////////////////////////
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -250,6 +253,15 @@ $(document).ready(function () {
     let nPos = 0;
     let szWord = "";
     let nStartPos = 0;
+
+
+    // Look for space followed by ( in string like "Spider-Man (Peter Parker)" and truncate the string
+    // at the space before the ( left bracket character.
+    nPos = szCharacter.indexOf(" (");
+    if (nPos != -1)
+    {
+      szCharacter = szCharacter.substring(0, nPos);
+    }
 
     // Format the character name string passed into this function.
     // Pull out each word and make the first letter capital and all the rest lower case.
