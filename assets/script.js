@@ -546,6 +546,7 @@ $(document).ready(function () {
             wikiLink.removeAttribute("href");
             wikiLink.removeAttribute("target");
             wikiLink.innerHTML = "";
+            wikiLink.style.padding = "0px";
 
             if (list_data.length > 0) {
               // Add list items.
@@ -566,6 +567,7 @@ $(document).ready(function () {
                       wikiLink.setAttribute("target", "_blank");
                       wikiLink.classList.add("wikibutton");
                       wikiLink.innerHTML = "Wikipedia link: " + szLinkName;
+                      wikiLink.style.padding = "5px";
                     }
                   }
                 }
@@ -611,6 +613,7 @@ $(document).ready(function () {
     wikiLink.removeAttribute("href");
     wikiLink.removeAttribute("target");
     wikiLink.innerHTML = "";
+    wikiLink.style.padding = "0px";
   }
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -623,6 +626,7 @@ $(document).ready(function () {
     wikiLink.removeAttribute("href");
     wikiLink.removeAttribute("target");
     wikiLink.innerHTML = "";
+    wikiLink.style.padding = "0px";
   }
 
   // SECTION END: End of Wikipedia Code : //////////////////////////////////////////////////////////////////////////////////////////////////
