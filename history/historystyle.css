@@ -12,9 +12,7 @@ header {
 nav {
     color: white;
     font-family: 'Coda', cursive;
-    text-shadow: var(--outline);
-    justify-items: end;
-    padding: 5px;
+    text-shadow: var(--outline); 
 }
 
 a {
@@ -27,10 +25,7 @@ a:hover {
 }
 
 body {
-    background-color: black;
-    background-image: url('./images/bg4.jpeg');
-    background-attachment: fixed;
-    background-size: cover;
+    text-align: center;
 }
 
 p {
@@ -46,26 +41,11 @@ main{
     position:relative; 
     top: 0; 
     left: 0;
+    padding: 30px;
 }
 
-.search_block{
-    display: inline-flex; 
-    flex-direction: column; 
-    align-content: flex-start;
-    flex-wrap: nowrap;
-    width: 20%;
-    min-height: 845px;
-    position: absolute; 
-    top: 0; 
-    left: 0;
-}
-
-.search_btn{
-    color: white;
-    margin: 25px 10px 10px 10px;
-    border: none;
-}
-
-.search_btn:hover{
-    opacity: 0.5; 
+img {
+    float: right; 
+    margin: 5px;
+    max-height: 350px;
 }
