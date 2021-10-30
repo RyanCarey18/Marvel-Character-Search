@@ -76,7 +76,7 @@ $(document).ready(function () {
       src: pic + "." + extension,
       alt: "Picture of " + charName,
     });
-    $("#char-name").text(charName);
+    $("#char-name").text("Character Name: " + charName);
     $("#marvel-desc").text(charDesc);
     $("#numCom").text("Number of Comics: " + charComics);
     $("#numSer").text("Number of Series: " + charSeries);
@@ -127,7 +127,10 @@ $(document).ready(function () {
         url = "https" + url;
         const character = $("<button>")
           .text(characters[i].name)
-          .attr("url", url);
+          .attr("url", url)
+          .addClass(
+            "search_btn ring-2 ring-red-600 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          );
         character.click(function (e) {
           $("html").scrollTop(0);
           fetch(url + "?apikey=" + publicKey + "&hash=" + hash + "&ts=" + time)
@@ -254,12 +257,10 @@ $(document).ready(function () {
     let szWord = "";
     let nStartPos = 0;
 
-
     // Look for space followed by ( in string like "Spider-Man (Peter Parker)" and truncate the string
     // at the space before the ( left bracket character.
     nPos = szCharacter.indexOf(" (");
-    if (nPos != -1)
-    {
+    if (nPos != -1) {
       szCharacter = szCharacter.substring(0, nPos);
     }
 
@@ -563,7 +564,8 @@ $(document).ready(function () {
                     if (szLinkName.toLowerCase() === szSearch.toLowerCase()) {
                       wikiLink.setAttribute("href", szLinkUrl);
                       wikiLink.setAttribute("target", "_blank");
-                      wikiLink.innerHTML = szLinkName;
+                      wikiLink.classList.add("wikibutton");
+                      wikiLink.innerHTML = "Wikipedia link: " + szLinkName;
                     }
                   }
                 }
@@ -631,6 +633,15 @@ $(document).ready(function () {
     saveHistory();
     for (i = 0; i < history.length; i++) {
       const historyButton = document.createElement("button");
+      historyButton.classList.add(
+        "bg-red-500",
+        "hover:bg-red-700",
+        "text-white",
+        "font-bold",
+        "py-2",
+        "px-4",
+        "rounded"
+      );
       historyButton.textContent = history[i];
       historyButton.addEventListener("click", function (e) {
         e.preventDefault();
