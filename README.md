@@ -40,7 +40,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ## Contact Info
 
 Team members:
+
 Ryan Carey: Ryan.Carey18@gmail.com
+
 Duane Cantera: DCantera@gmail.com
+
 Samantha Doherty: SDoherty@gmail.com
+
 Hunter Zandri: HZandri@gmail.com
