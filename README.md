@@ -1,4 +1,4 @@
-# Project-01
+# Marvel Character Search
 
 ## Link
 
@@ -43,7 +43,7 @@ Team members:
 
 Ryan Carey: Ryan.Carey18@gmail.com
 
-Duane Cantera: DCantera@gmail.com
+Duane Cantera: Duane.J.Cantera@gmail.com
 
 Samantha Doherty: SDoherty@gmail.com
 
