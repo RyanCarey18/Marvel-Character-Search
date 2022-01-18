@@ -16,7 +16,7 @@ Click [here](https://ryancarey18.github.io/project-01/) to go to the deployed ap
 
 - [Usage](#Usage)
 
-- [Technologies Used](#Technologies)
+- [Technologies Used](#Technologies-Used)
 
 - [Contributing](#Contributing)
 
@@ -56,18 +56,22 @@ This application is covered under the [MIT](https://opensource.org/licenses/MIT)
 
 ## Questions
 
-If you have any questions about the repository you can contact me us at our respective links.
+If you have any questions about the repository you can contact us at our respective links.
 
 Ryan:
+
 Email me at ryan.carey18@gmail.com. Otherwise you can find me on GitHub [here](https://github.com/ryancarey18).
 
 Duane:
+
 Email me at Duane.J.Cantera@gmail.com. Otherwise you can find me on GitHub [here](https://github.com/canterad).
 
 Samantha:
+
 You can find me on GitHub [here](https://github.com/srdoherty16).
 
 Hunter:
+
 You can find me on GitHub [here](https://github.com/Hunter-Zandri).
 
 ## Pictures
