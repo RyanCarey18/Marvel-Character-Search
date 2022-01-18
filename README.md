@@ -1,8 +1,40 @@
 # Marvel Character Search
 
-## Link
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Click [here](https://ryancarey18.github.io/project-01/) to go to my deployed page.
+## Description
+
+An application that allows users to search for Marvel Heroes and then shows information about them.
+
+## Link to Deployed Site
+
+Click [here](https://ryancarey18.github.io/project-01/) to go to the deployed application.
+
+## Table of Contents
+
+- [Installation](#Installation)
+
+- [Usage](#Usage)
+
+- [Technologies Used](#Technologies)
+
+- [Contributing](#Contributing)
+
+- [License](#License)
+
+- [Questions](#Questions)
+
+- [Pictures](#Pictures)
+
+## Installation
+
+No installation required.
+
+## Usage
+
+Just clone from the repo. Thats it.
+
+Type in a character and it will show you information about them. Click on a character name and it will show you information about them
 
 ## Technologies Used
 
@@ -14,9 +46,29 @@ Click [here](https://ryancarey18.github.io/project-01/) to go to my deployed pag
     Hashify API
     Google Fonts
 
-## Usage
+## Contributing
 
-    Type in a character and it will show you information about them. Click on a character name and it will show you information about them
+Not accepting contributions.
+
+## License
+
+This application is covered under the [MIT](https://opensource.org/licenses/MIT) license.
+
+## Questions
+
+If you have any questions about the repository you can contact me us at our respective links.
+
+Ryan:
+Email me at ryan.carey18@gmail.com. Otherwise you can find me on GitHub [here](https://github.com/ryancarey18).
+
+Duane:
+Email me at Duane.J.Cantera@gmail.com. Otherwise you can find me on GitHub [here](https://github.com/canterad).
+
+Samantha:
+You can find me on GitHub [here](https://github.com/srdoherty16).
+
+Hunter:
+You can find me on GitHub [here](https://github.com/Hunter-Zandri).
 
 ## Pictures
 
@@ -26,25 +78,3 @@ Homepage:
 ![Homepage](https://user-images.githubusercontent.com/86500418/139541290-8a345b25-51de-4979-b108-4fe76b902e5d.png)
 Homepage after search:
 ![Homepage after search](https://user-images.githubusercontent.com/86500418/139541286-3781e6a9-9904-4c4f-b547-12c9f74b8cbf.png)
-
-## License
-
-Copyright 2021 Ryan Carey
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-## Contact Info
-
-Team members:
-
-Ryan Carey: Ryan.Carey18@gmail.com
-
-Duane Cantera: Duane.J.Cantera@gmail.com
-
-Samantha Doherty: SDoherty@gmail.com
-
-Hunter Zandri: HZandri@gmail.com
