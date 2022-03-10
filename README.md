@@ -8,7 +8,7 @@ An application that allows users to search for Marvel Heroes and then shows info
 
 ## Link to Deployed Site
 
-Click [here](https://ryancarey18.github.io/project-01/) to go to the deployed application.
+Click [here](https://ryancarey18.github.io/Marvel-Character-Search/) to go to the deployed application.
 
 ## Table of Contents
 
